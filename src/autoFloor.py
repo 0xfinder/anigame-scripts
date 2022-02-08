@@ -6,7 +6,7 @@ from discum.utils.button import Buttoner
 from dotenv import load_dotenv
 load_dotenv()
 
-bot = discum.Client(token=os.getenv("MAYO"), log={
+bot = discum.Client(token=os.getenv("TOKEN"), log={
                     "console": False, "file": False})
 
 channelID = '915817078898962493'
