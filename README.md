@@ -1,1 +1,1 @@
-"# anigame-scripts"
+# anigame-scripts
