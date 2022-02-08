@@ -1,1 +1,1 @@
-"# anigame-selfbot" 
+"# anigame-scripts"
