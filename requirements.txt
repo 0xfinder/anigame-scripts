@@ -2,4 +2,3 @@ discord.py==1.7.3
 discum==1.4.0
 python-dotenv==0.19.2
 requests==2.26.0
-wonderwords==2.2.0
