@@ -1,15 +1,18 @@
-from discord.ext.commands.errors import MissingPermissions
 import discord
 import re
 import os
+from pathlib import Path
+import json
 
-from discord.ext import tasks
-
-from dotenv import load_dotenv
-load_dotenv()
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
 
 TOKEN = os.getenv("TOKEN")
-myChannel = 901349981343064104
+here = Path(__file__).resolve()
+with open(here.parents[0] / 'config.json') as f:
+    config = json.load(f)
+
+channelID = int(config["channelID"])
 
 
 class MyClient(discord.Client):
@@ -27,7 +30,7 @@ class MyClient(discord.Client):
         if message.author == self.user:
             return
 
-        if message.channel.id == 758956287937085450:
+        if str(message.channel.id) == '758956287937085450':
             embeds = message.embeds
             for embed in embeds:
                 try:
@@ -39,7 +42,7 @@ class MyClient(discord.Client):
                     cost = int(detailsOfEmbed['title'].split("__")[1])
                     cardID = re.findall(
                         r'\d+', detailsOfEmbed['footer']['text'])[0]
-                    channel = client.get_channel(myChannel)
+                    channel = client.get_channel(channelID)
                     if cost <= 50:
                         await channel.send(f'.mk cbuy {cardID}')
                     elif cost > 50:
