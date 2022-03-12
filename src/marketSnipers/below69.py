@@ -43,7 +43,7 @@ class MarketSniper(discord.Client):
                         r'\d+', detailsOfEmbed['footer']['text'])[0]
                     channel = client.get_channel(CHANNEL)
                     if cost <= COST and rar in ['Ultra Rare', 'Super Rare']:
-                        await channel.send(f'{PREFIX} mk cbuy {cardID}')
+                        await channel.send(f'{PREFIX}mk cbuy {cardID}')
                 except Exception as e:
                     print(e)
 
