@@ -1,23 +1,25 @@
-from discord.ext.commands.errors import MissingPermissions
 import discord
 import re
-import os
 
-from discord.ext import tasks
+import os
 
 from dotenv import load_dotenv
 load_dotenv()
 
 TOKEN = os.getenv("TOKEN")
-myChannel = 901349981343064104
+CHANNEL = 69696969699696
+COST = 69
+PREFIX = "."
+ANIGAME_GLOBAL_MARKET_CHANNEL = 758956287937085450
+
+'''
+Buys any UR/SR below 69 gold
+'''
 
 
-class MyClient(discord.Client):
+class MarketSniper(discord.Client):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-        self.SRcost = 250
-        self.URcost = 30000
 
     async def on_ready(self):
         print('Logged on as', self.user)
@@ -27,7 +29,7 @@ class MyClient(discord.Client):
         if message.author == self.user:
             return
 
-        if message.channel.id == 758956287937085450:
+        if message.channel.id == ANIGAME_GLOBAL_MARKET_CHANNEL:
             embeds = message.embeds
             for embed in embeds:
                 try:
@@ -39,17 +41,12 @@ class MyClient(discord.Client):
                     cost = int(detailsOfEmbed['title'].split("__")[1])
                     cardID = re.findall(
                         r'\d+', detailsOfEmbed['footer']['text'])[0]
-                    channel = client.get_channel(myChannel)
-                    if cost <= 50:
-                        await channel.send(f'.mk cbuy {cardID}')
-                    elif cost > 50:
-                        if cost <= self.URcost and rar == 'Ultra Rare':
-                            await channel.send(f'.mk cbuy {cardID}')
-                        elif cost <= self.SRcost and rar == 'Super Rare':
-                            await channel.send(f'.mk cbuy {cardID}')
+                    channel = client.get_channel(CHANNEL)
+                    if cost <= COST and rar in ['Ultra Rare', 'Super Rare']:
+                        await channel.send(f'{PREFIX} mk cbuy {cardID}')
                 except Exception as e:
                     print(e)
 
 
-client = MyClient()
+client = MarketSniper()
 client.run(TOKEN)
