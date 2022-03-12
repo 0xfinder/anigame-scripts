@@ -1,12 +1,19 @@
-import discord
-import re
+from dotenv import load_dotenv, find_dotenv
+import json
+from pathlib import Path
 import os
+import re
+import discord
 
-from dotenv import load_dotenv
-load_dotenv()
+load_dotenv(find_dotenv())
+
 
 TOKEN = os.getenv("TOKEN")
-CHANNEL = 696969969696
+here = Path(__file__).resolve()
+with open(here.parents[0] / 'config.json') as f:
+    config = json.load(f)
+
+channelID = int(config["channelID"])
 
 
 class MarketSniper(discord.Client):
@@ -37,7 +44,7 @@ class MarketSniper(discord.Client):
                     cost = int(detailsOfEmbed['title'].split("__")[1])
                     cardID = re.findall(
                         r'\d+', detailsOfEmbed['footer']['text'])[0]
-                    channel = client.get_channel(CHANNEL)
+                    channel = client.get_channel(channelID)
                     if cost <= 50:
                         await channel.send(f'.mk cbuy {cardID}')
                     elif cost > 50:

@@ -2,15 +2,20 @@ import re
 import time
 import os
 import discum
+import json
+from pathlib import Path
 from discum.utils.button import Buttoner
-from dotenv import load_dotenv
-load_dotenv()
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
 
 bot = discum.Client(token=os.getenv("TOKEN"), log={
                     "console": False, "file": False})
 
-channelID = '915817078898962493'
-counter = 0
+here = Path(__file__).resolve()
+with open(here.parents[0] / 'config.json') as f:
+    config = json.load(f)
+
+channelID = config["channelID"]
 
 
 @bot.gateway.command
