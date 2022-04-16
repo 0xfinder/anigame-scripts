@@ -1,4 +1,3 @@
-from discord.ext.commands.errors import MissingPermissions
 import discord
 import re
 import os
